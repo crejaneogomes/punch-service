@@ -1,5 +1,7 @@
 package br.crog.api.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,27 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.crog.api.models.Punch;
-import br.crog.api.repositories.PunchRepository;
-import br.crog.api.repositories.UserRepository;
+import br.crog.api.services.PunchService;
 
 @RestController
 @RequestMapping(value = "/api")
 public class PunchController {
 	@Autowired
-	PunchRepository punchRepository;
-	@Autowired
-	UserRepository userRepository;
+	PunchService punchService;
 
 	@PostMapping("/punch/{userId}")
 	public Punch savePunch(@RequestBody Punch punch, @PathVariable(value = "userId") long userId) throws Exception {
-		return userRepository.findById(userId).map(user -> {
-			punch.setUser(user);
-			return punchRepository.save(punch);
-		}).orElseThrow(() -> new Exception("User not found"));
+		return punchService.savePunch(userId, punch);
 	}
 
 	@GetMapping("/punch/{userId}")
-	public Punch getPunchByUserId(@PathVariable(value = "userId") long userId) {
-		return punchRepository.findByUserId(userId);
+	public List<Punch> getPunchByUserId(@PathVariable(value = "userId") long userId) {
+		return punchService.getPunchByUserId(userId);
 	}
 }
