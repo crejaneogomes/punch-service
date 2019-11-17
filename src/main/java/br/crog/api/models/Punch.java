@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -22,6 +23,7 @@ public class Punch implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone="utc")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date schedule;
 	@ManyToOne
