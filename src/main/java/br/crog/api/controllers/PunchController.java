@@ -20,12 +20,12 @@ public class PunchController {
 	PunchService punchService;
 
 	@PostMapping("/punch/{userId}")
-	public Punch savePunch(@RequestBody Punch punch, @PathVariable(value = "userId") long userId) throws Exception {
+	public Punch savePunch(@RequestBody Punch punch, @PathVariable(value = "userId") String userId) throws Exception {
 		return punchService.savePunch(userId, punch);
 	}
 
 	@GetMapping("/punch/{userId}")
-	public List<Punch> getPunchByUserId(@PathVariable(value = "userId") long userId) {
-		return punchService.getPunchByUserId(userId);
+	public List<Punch> getPunchByUserId(@PathVariable(value = "userId") String userId) {
+		return punchService.getPunchByPis(userId);
 	}
 }
