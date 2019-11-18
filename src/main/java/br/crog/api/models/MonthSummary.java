@@ -5,7 +5,7 @@ import java.util.List;
 public class MonthSummary {
 
 	private float totalHoursOnMonth;
-	private String Moth;
+	private String Month;
 	private List<DaySummary> detailsByDay;
 	
 	public float getTotalHoursOnMonth() {
@@ -14,11 +14,11 @@ public class MonthSummary {
 	public void setTotalHoursOnMonth(float totalHoursOnMonth) {
 		this.totalHoursOnMonth = totalHoursOnMonth;
 	}
-	public String getMoth() {
-		return Moth;
+	public String getMonth() {
+		return Month;
 	}
-	public void setMoth(String moth) {
-		Moth = moth;
+	public void setMonth(String month) {
+		Month = month;
 	}
 	public List<DaySummary> getDaySummary() {
 		return detailsByDay;

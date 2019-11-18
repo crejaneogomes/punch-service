@@ -76,7 +76,7 @@ public class UserService {
 	public MonthSummary initilizeMonthSummary() {
 		MonthSummary monthSummary = new MonthSummary();
 		monthSummary.setTotalHoursOnMonth(0);
-		monthSummary.setMoth(null);
+		monthSummary.setMonth(null);
 		monthSummary.setDaySummary(null);
 
 		return monthSummary;
@@ -164,7 +164,7 @@ public class UserService {
 				countHours = 0;
 			}
 
-			monthSummary.setMoth(DateUtils.getMonthName(month));
+			monthSummary.setMonth(DateUtils.getMonthName(month));
 			monthSummary.setTotalHoursOnMonth(countHoursOnMonth);
 		}
 		return monthSummary;
