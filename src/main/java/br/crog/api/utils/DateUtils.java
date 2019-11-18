@@ -4,18 +4,34 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Class wiht utils date functions
+ * @author crog
+ *
+ */
 public class DateUtils {
 
 	private static Calendar c = Calendar.getInstance();
 	private static int saturdayWeekDay = 7;
 	private static int sundayWeekDay = 1;
 
+	/**
+	 * Add amount of dates
+	 * @param date the initial date
+	 * @param amount of days to sum
+	 * @return the date resulted
+	 */
 	public static Date add(Date date, int amount) {
 		c.setTime(date);
 		c.add(Calendar.DATE, amount);
 		return c.getTime();
 	}
 
+	/**
+	 * check if the date is not saturday or sunday
+	 * @param date the date to be verified
+	 * @return false/true if the date is a weekday
+	 */
 	public static boolean isWeekDay(Date date) {
 		c.setTime(date);
 		int weekDay = c.get(Calendar.DAY_OF_WEEK);
@@ -26,6 +42,11 @@ public class DateUtils {
 		}
 	}
 
+	/**
+	 * verify it the date is on saturday
+	 * @param date the date to be verified
+	 * @return true/false
+	 */
 	public static boolean isSaturday(Date date) {
 		c.setTime(date);
 		int weekDay = c.get(Calendar.DAY_OF_WEEK);
@@ -36,6 +57,11 @@ public class DateUtils {
 		}
 	}
 
+	/**
+	 * verify it the date is on sunday
+	 * @param date
+	 * @return
+	 */
 	public static boolean isSunday(Date date) {
 		c.setTime(date);
 		int weekDay = c.get(Calendar.DAY_OF_WEEK);
@@ -46,6 +72,11 @@ public class DateUtils {
 		}
 	}
 
+	/**
+	 * verirfy if the hours is in an interval of 22:00 to 06:00
+	 * @param date the date to be verified
+	 * @return true/false
+	 */
 	// work at 22:00 to 06:00
 	public static boolean isNightTime(Date date) {
 		boolean isNightTime = false;
@@ -67,6 +98,10 @@ public class DateUtils {
 		return isNightTime;
 	}
 
+	/**
+	 * get today date at 00:00
+	 * @return date initialized
+	 */
 	public static Date todayAt00() {
 		c.set(Calendar.HOUR, 0);
 		c.set(Calendar.MINUTE, 0);
@@ -75,6 +110,11 @@ public class DateUtils {
 		return c.getTime();
 	}
 
+	/**
+	 * get the first day of a month
+	 * @param month the month to be verified
+	 * @return the first day of a month
+	 */
 	public static Date firstDayOfAMonth(int month) {
 		c.set(Calendar.YEAR, 2019);
 		c.set(Calendar.MONTH, month);
@@ -86,6 +126,11 @@ public class DateUtils {
 		return c.getTime();
 	}
 
+	/**
+	 * get the last day of a month
+	 * @param month the month to be verified
+	 * @return the last day
+	 */
 	public static Date lastDayOfAMonth(int month) {
 		Date firstDayOfAMonth = firstDayOfAMonth(month);
 		c.setTime(firstDayOfAMonth);
@@ -93,6 +138,11 @@ public class DateUtils {
 		return c.getTime();
 	}
 
+	/**
+	 * get the string month name
+	 * @param month the month to be verified
+	 * @return the name of the month
+	 */
 	public static String getMonthName(int month) {
 		DateFormatSymbols dfs = new DateFormatSymbols();
 		String[] months = dfs.getMonths();

@@ -12,6 +12,12 @@ import br.crog.api.models.User;
 import br.crog.api.repositories.PunchRepository;
 import br.crog.api.repositories.UserRepository;
 
+/**
+ * This class keep the functions with the business roles about the punchs
+ * @see java.lang.Object
+ * @author crog
+ *
+ */
 @Service
 public class PunchService {
 
@@ -21,11 +27,25 @@ public class PunchService {
 	@Autowired
 	UserRepository userRepository;
 
+	/**
+	 * verify if the punch already exists in a database
+	 * @param punchTime the date of the punch
+	 * @param userId the user pis
+	 * @return the punch if the already exists, if not returned null
+	 */
 	public Punch punchAlreadyExists(Date punchTime, String userId) {
 		Punch newPunch = punchRepository.findByScheduleAndUserPis(punchTime, userId);
 		return newPunch;
 	}
 
+	/**
+	 * save a punch
+	 * @param userId the user pis
+	 * @param punch the punch to be saved
+	 * @return the punch saved
+	 * @throws Exception if the punch already exists
+	 * @throws Exception if the user do not exists
+	 */
 	public Punch savePunch(String userId, Punch punch) throws Exception {
 		try {
 			Optional<User> user = userRepository.findById(userId);
@@ -48,6 +68,11 @@ public class PunchService {
 		}
 	}
 
+	/**
+	 * get the punchs of a user
+	 * @param pis
+	 * @return list of the all punchs about a user
+	 */
 	public List<Punch> getPunchByPis(String pis) {
 		return punchRepository.findByUserPis(pis);
 	}

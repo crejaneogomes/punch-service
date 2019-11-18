@@ -16,6 +16,13 @@ import br.crog.api.repositories.PunchRepository;
 import br.crog.api.repositories.UserRepository;
 import br.crog.api.utils.DateUtils;
 
+
+/**
+ * This class keep the functions with the business roles about the user
+ * @see java.lang.Object
+ * @author crog
+ *
+ */
 @Service
 public class UserService {
 
@@ -25,14 +32,29 @@ public class UserService {
 	@Autowired
 	PunchRepository punchRepository;
 
+	/**
+	 * get all users contained in the database
+	 * @return the list of users
+	 */
 	public List<User> listUsers() {
 		return this.userRepository.findAll();
 	}
 
+	/**
+	 * Save a user in the database
+	 * @param user the user instance to be saved
+	 * @return the user informations saved
+	 */
 	public User saveUser(@RequestBody User user) {
 		return userRepository.save(user);
 	}
 
+	/**
+	 * calculate the total of hours worked by day of a user and other informations contained in DaySummary object
+	 * @param userId the user pis
+	 * @param date the date to calculate
+	 * @return DaySummary object with the total of hours worked and others attributes
+	 */
 	public DaySummary getTotalHoursWorkedByDay(String userId, Date date) {
 		float countHours = 0;
 		int amountOfdaysToAdd = 1;
@@ -59,6 +81,14 @@ public class UserService {
 		return daySummary;
 	}
 
+	
+	/**
+	 * get the punchs of a user within a certain date range
+	 * @param userId the user pis 
+	 * @param startDate the initial date of the interval
+	 * @param finishDate the finish date of the interval
+	 * @return list with the punchs contained in a database
+	 */
 	public List<Punch> getUserPunchsInADatesInterval(String userId, Date startDate, Date finishDate) {
 		List<Punch> punchs = punchRepository
 				.findByUserPisAndScheduleGreaterThanEqualAndScheduleLessThanEqualOrderByScheduleAsc(userId, startDate,
@@ -66,6 +96,10 @@ public class UserService {
 		return punchs;
 	}
 
+	/**
+	 * initialize the day summary object
+	 * @return DaySummary object initialized
+	 */
 	public DaySummary initilizeDaySummary() {
 		DaySummary daySummary = new DaySummary();
 		daySummary.setRestIntervalLaw(null);
@@ -73,6 +107,10 @@ public class UserService {
 		return daySummary;
 	}
 
+	/**
+	 * initialize the month summary object
+	 * @return MonthSummary object initialized
+	 */
 	public MonthSummary initilizeMonthSummary() {
 		MonthSummary monthSummary = new MonthSummary();
 		monthSummary.setTotalHoursOnMonth(0);
@@ -82,7 +120,13 @@ public class UserService {
 		return monthSummary;
 	}
 
+	
 	// contem um numero par de batidas e maior que 0
+	/**
+	 * verify if the list of the punchs in a day is valid
+	 * @param punchs the list of punchs
+	 * @return
+	 */
 	public boolean isAValidPunchList(List<Punch> punchs) {
 		if (punchs.size() == 0 || punchs.size() % 2 > 0) {
 			return false;
@@ -91,6 +135,12 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * get the real valeu of the minute according to the day of the week
+	 * @param date the date to determine the minute value
+	 * @param totalOfHours the total of hours worked in a day by a user
+	 * @return the total of hours worked recalculated
+	 */
 	public float getMinuteValueByDay(Date date, float totalOfHours) {
 		float minuteValue = 0;
 		if (DateUtils.isWeekDay(date)) {
@@ -103,6 +153,13 @@ public class UserService {
 		return minuteValue;
 	}
 
+	/**
+	 * check if the rest interval law is being fulfilled
+	 * @param daySummary the day summary object with the informations of the user
+	 * @param totalOfHours the total of hours worked in a day 
+	 * @param punchs the list of the punchs 
+	 * @return day summary with the status and restInterval law calculated and filled
+	 */
 	public DaySummary chekRestIntervalLaw(DaySummary daySummary, float totalOfHours, List<Punch> punchs) {
 		int startRestTimeindex = 1;
 		int finishRestTimeindex = 2;
@@ -130,6 +187,12 @@ public class UserService {
 		return daySummary;
 	}
 
+	/**
+	 * Calculate the total of hours in the interval of dates
+	 * @param Initialpunch the initial date of the interval
+	 * @param finalPunch the final date of the interval
+	 * @return the total of hours calculated
+	 */
 	public float calculateHoursInterval(Punch Initialpunch, Punch finalPunch) {
 		float resultInMilli = finalPunch.getSchedule().getTime() - Initialpunch.getSchedule().getTime();
 		float resultInSecond = resultInMilli / 1000;
@@ -137,6 +200,13 @@ public class UserService {
 		return resultInHours;
 	}
 
+	
+	/**
+	 * calculate the total of hours worked by month of a user and other informations contained in MonthSummary object
+	 * @param userId the user pis
+	 * @param month the month to calculate the worked hours
+	 * @return MonthSummary object with the total of hours worked and others attributes
+	 */
 	public MonthSummary getTotalHoursWorkedByMonth(String userId, int month) {
 		float countHours = 0;
 		float countHoursOnMonth = 0;
@@ -170,6 +240,15 @@ public class UserService {
 		return monthSummary;
 	}
 
+	
+	/**
+	 * get the day summaries list in a month
+	 * @param month the month of the informations to be returned
+	 * @param startDate the initial date of the interval
+	 * @param finishDate the final date of the interval
+	 * @param userId the user pis
+	 * @return list of the day summaries in a month
+	 */
 	public List<DaySummary> fillDedetailsByDayList(int month, Date startDate, Date finishDate, String userId) {
 		List<DaySummary> daySummaries = new ArrayList<DaySummary>();
 		for (Date dateIt = startDate; dateIt.before(finishDate); dateIt = DateUtils.add(dateIt, 1)) {
