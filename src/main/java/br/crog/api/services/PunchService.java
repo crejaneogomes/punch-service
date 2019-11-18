@@ -21,23 +21,6 @@ public class PunchService {
 	@Autowired
 	UserRepository userRepository;
 
-	public long getTotalHoursWorkedByDay(String userId, Date day) {
-		long countHours = 0;
-		List<Punch> punchs = punchRepository.findByUserPisAndSchedule(userId, day);
-		if (punchs.size() == 0 || punchs.size() % 2 > 0) {
-			return 0;
-		} else {
-			for (int i = 0; i < punchs.size(); i = i+2) {
-				countHours += ((punchs.get(i).getSchedule().getTime() - punchs.get(i+1).getSchedule().getTime())/1000)/3600;
-			}
-		}
-		return countHours;
-	}
-
-	public int getTotalHoursWorkedByMonth(long userId) {
-		return 0;
-	}
-
 	public Punch punchAlreadyExists(Date punchTime, String userId) {
 		Punch newPunch = punchRepository.findByScheduleAndUserPis(punchTime, userId);
 		return newPunch;

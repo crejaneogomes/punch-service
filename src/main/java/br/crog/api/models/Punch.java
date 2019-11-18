@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.OrderBy;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,6 +25,7 @@ public class Punch implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@OrderBy(clause = "schedule ASC")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone="utc")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date schedule;
@@ -30,6 +33,7 @@ public class Punch implements Serializable {
 	@JsonIgnore
 	private User user;
 
+	@JsonIgnore
 	public long getId() {
 		return id;
 	}
