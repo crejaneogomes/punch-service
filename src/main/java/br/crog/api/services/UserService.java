@@ -64,7 +64,7 @@ public class UserService {
 
 		DaySummary daySummary = initilizeDaySummary();
 
-		List<Punch> punchs = getUserPunchsInADatesInterval(userId, startDate, finishDate);
+		List<Punch> punchs = getUserPunchsInADatesInterval(userId, startDate, DateUtils.setMidnight(finishDate));
 
 		if (!isAValidPunchList(punchs)) {
 			return daySummary;
@@ -91,7 +91,7 @@ public class UserService {
 	 */
 	public List<Punch> getUserPunchsInADatesInterval(String userId, Date startDate, Date finishDate) {
 		List<Punch> punchs = punchRepository
-				.findByUserPisAndScheduleGreaterThanEqualAndScheduleLessThanEqualOrderByScheduleAsc(userId, startDate,
+				.findByUserPisAndScheduleGreaterThanEqualAndScheduleLessThanOrderByScheduleAsc(userId, startDate,
 						finishDate);
 		return punchs;
 	}

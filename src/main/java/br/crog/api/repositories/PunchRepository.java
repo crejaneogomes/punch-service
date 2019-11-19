@@ -11,7 +11,7 @@ public interface PunchRepository extends JpaRepository<Punch, Long> {
 
 	List<Punch> findByUserPis(String user_id);
 
-	List<Punch> findByUserPisAndScheduleGreaterThanEqualAndScheduleLessThanEqualOrderByScheduleAsc(String user_id, Date schedule1, Date schedule2);
+	List<Punch> findByUserPisAndScheduleGreaterThanEqualAndScheduleLessThanOrderByScheduleAsc(String user_id, Date schedule1, Date schedule2);
 
 	Punch findByScheduleAndUserPis(Date schedule, String userId);
 
