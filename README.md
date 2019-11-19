@@ -6,7 +6,7 @@ Algumas consideraçoes:
 - Todas as requisiçoes precisam ser autenticadas
   login: user
   senha: user
-- As configurações de baco de dados precisam ser adicionadas no arquivo application.properties localizao no diretorio src/main/resources. Durante o desenvolvimento foi utilizad o postgres
+- As configurações de baco de dados precisam ser adicionadas no arquivo application.properties localizado no diretório src/main/resources. Durante o desenvolvimento foi utilizado o sgbd postgres
 
 
 O Eclipse foi a IDE escolhida, para imporar o projeto basta ir em file->import e fazer o import usando a opção maven project
